@@ -12,8 +12,13 @@ RUN ln -s /root/.ollama/bin/ollama /usr/local/bin/ollama || true
 # Check version
 RUN ollama --version
 
-# Expose the correct port
+# Expose Ollama port
 EXPOSE 11434
 
-# CMD: run Ollama and pull model, then keep server alive
-CMD ["sh", "-c", "sed -i 's/localhost/0.0.0.0/g' /root/.ollama/config.toml && ollama serve & sleep 5 && ollama pull llama3.2:1b && tail -f /dev/null"]
+# Start, wait for config, patch host, pull model
+CMD ["sh", "-c", "\
+ollama serve & \
+while [ ! -f /root/.ollama/config.toml ]; do sleep 1; done && \
+sed -i 's/localhost/0.0.0.0/g' /root/.ollama/config.toml && \
+ollama pull llama3.2:1b && \
+tail -f /dev/null"]
