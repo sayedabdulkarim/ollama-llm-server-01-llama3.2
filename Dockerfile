@@ -16,4 +16,4 @@ RUN ollama --version
 EXPOSE 11434
 
 # CMD: run Ollama and pull model, then keep server alive
-CMD ["sh", "-c", "ollama serve & sleep 5 && ollama pull llama3.2:1b && tail -f /dev/null"]
+CMD ["sh", "-c", "sed -i 's/localhost/0.0.0.0/g' /root/.ollama/config.toml && ollama serve & sleep 5 && ollama pull llama3.2:1b && tail -f /dev/null"]
