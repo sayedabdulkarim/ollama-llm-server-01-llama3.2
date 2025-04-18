@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: ollama-llm-server
+    env: docker
+    plan: free
+    autoDeploy: true
+    region: oregon
