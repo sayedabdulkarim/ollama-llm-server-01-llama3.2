@@ -6,14 +6,14 @@ RUN apt-get update && apt-get install -y curl bash ca-certificates && apt-get cl
 # Install Ollama CLI
 RUN curl -fsSL https://ollama.com/install.sh | bash
 
-# Symlink ollama in case it lands in ~/.ollama/bin
+# Symlink ollama
 RUN ln -s /root/.ollama/bin/ollama /usr/local/bin/ollama || true
 
-# Check if it exists
+# Check version
 RUN ollama --version
 
-# Expose port
+# Expose the correct port
 EXPOSE 11434
 
-# Final CMD - no --host
-CMD bash -c "ollama serve & sleep 10 && ollama pull llama3.2:1b && tail -f /dev/null"
+# CMD: run Ollama and pull model, then keep server alive
+CMD ["sh", "-c", "ollama serve & sleep 5 && ollama pull llama3.2:1b && tail -f /dev/null"]
