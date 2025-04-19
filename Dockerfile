@@ -16,4 +16,4 @@ RUN ollama --version
 EXPOSE 11434
 
 # Start, wait for config, patch host, pull model
-CMD ["sh", "-c", "ollama serve --host 0.0.0.0 & sleep 5 && ollama pull llama3.2:1b && tail -f /dev/null"]
+CMD ["sh", "-c", "ollama serve & sleep 5 && ollama pull llama3.2:1b && tail -f /dev/null"]
